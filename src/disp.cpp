@@ -423,8 +423,8 @@ void DispObject::NodeInit(const Local<Object> &target, Isolate* isolate, Local<C
 
     Local<ObjectTemplate> inst = clazz->InstanceTemplate();
     inst->SetInternalFieldCount(1);
-    inst->SetHandler(NamedPropertyHandlerConfiguration(NodeGet, NodeSet));
-    inst->SetHandler(IndexedPropertyHandlerConfiguration(NodeGetByIndex, NodeSetByIndex));
+    inst->SetHandler(NamedPropertyHandlerConfiguration(reinterpret_cast<NamedPropertyGetterCallback>(NodeGet), reinterpret_cast<NamedPropertySetterCallback>(NodeSet)));
+    inst->SetHandler(IndexedPropertyHandlerConfiguration(reinterpret_cast<IndexedPropertyGetterCallback>(NodeGetByIndex), reinterpret_cast<IndexedPropertySetterCallback>(NodeSetByIndex)));
     inst->SetCallAsFunctionHandler(NodeCall);
 	inst->SetNativeDataProperty(v8str(isolate, "__id"), NodeGet);
 	inst->SetNativeDataProperty(v8str(isolate, "__value"), NodeGet);
@@ -965,8 +965,8 @@ void VariantObject::NodeInit(const Local<Object> &target, Isolate* isolate, Loca
 
 	Local<ObjectTemplate> inst = clazz->InstanceTemplate();
 	inst->SetInternalFieldCount(1);
-    inst->SetHandler(NamedPropertyHandlerConfiguration(NodeGet, NodeSet));
-    inst->SetHandler(IndexedPropertyHandlerConfiguration(NodeGetByIndex, NodeSetByIndex));
+    inst->SetHandler(NamedPropertyHandlerConfiguration(reinterpret_cast<NamedPropertyGetterCallback>(NodeGet), reinterpret_cast<NamedPropertySetterCallback>(NodeSet)));
+    inst->SetHandler(IndexedPropertyHandlerConfiguration(reinterpret_cast<IndexedPropertyGetterCallback>(NodeGetByIndex), reinterpret_cast<IndexedPropertySetterCallback>(NodeSetByIndex)));
     //inst->SetCallAsFunctionHandler(NodeCall);
 	//inst->SetNativeDataProperty(v8str(isolate, "__id"), NodeGet);
 
